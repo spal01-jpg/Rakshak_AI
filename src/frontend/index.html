@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="clean">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rakshak AI (रक्षक AI) - Personnel Stress & Welfare Monitoring System</title>
+  <link rel="icon" type="image/jpeg" href="assets/rakshak_ai_eagle_logo.jpg?v=eagle_final" />
+  
+  <!-- Progressive Web App (PWA) Manifest & Native App Meta -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0a1931" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Rakshak AI" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js for Radar & Trends (Canva Screens 3 & 4) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- ============================================================== -->
+  <!-- 1. AUTH & ROLE LANDING PORTAL (CANVA SCREEN 1)                -->
+  <!-- ============================================================== -->
+  <section id="authLandingView" class="auth-landing-view">
+    <!-- Left Hero Panel -->
+    <div class="auth-hero-panel">
+      <div class="auth-hero-top">
+        <div class="emblem-title-group">
+          <!-- Official RakshakAI Eagle Emblem Logo -->
+          <img src="assets/rakshak_ai_eagle_logo.jpg?v=eagle_final" class="app-official-logo-hero" alt="RakshakAI Eagle Emblem" />
+          <div class="auth-hero-tagline">
+            <h1>RakshakAI Personnel Welfare<br>& Stress Monitoring System</h1>
+            <p>Healthier Minds | Stronger Forces | Safer Tomorrow</p>
+          </div>
+        </div>
+        <div class="auth-serving-tag">
+          Serving Those<br>Who Serve Us 🇮🇳
+        </div>
+      </div>
+
+      <!-- 4 Value Props from Canva Screen 1 -->
+      <div class="auth-features-list">
+        <div class="auth-feature-item">
+          <div class="auth-feature-icon"><i class="fas fa-brain"></i></div>
+          <div class="auth-feature-text">
+            <h4>Monitor Well-being</h4>
+            <p>Track stress, fatigue and emotional health non-punitively</p>
+          </div>
+        </div>
+
+        <div class="auth-feature-item">
+          <div class="auth-feature-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="auth-feature-text">
+            <h4>Predict Risks</h4>
+            <p>AI-driven early warning and behavioral analytics</p>
+          </div>
+        </div>
+
+        <div class="auth-feature-item">
+          <div class="auth-feature-icon"><i class="fas fa-user-shield"></i></div>
+          <div class="auth-feature-text">
+            <h4>Enable Early Intervention</h4>
+            <p>Timely proactive support, leave balancing, and counseling</p>
+          </div>
+        </div>
+
+        <div class="auth-feature-item">
+          <div class="auth-feature-icon"><i class="fas fa-users"></i></div>
+          <div class="auth-feature-text">
+            <h4>Build a Stronger Force</h4>
+            <p>Healthy personnel. Mission ready.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-hero-quote">
+        "The strength of our forces lies not just in their skills, but in their well-being."
+      </div>
+    </div>
+
+    <!-- Right Side: Auth & Role Selection Form -->
+    <div class="auth-form-panel">
+      <div class="auth-badge-row">
+        <div class="auth-secure-badge">
+          <i class="fas fa-lock"></i> Secure Access | SSL Encrypted
+        </div>
+        <button type="button" class="auth-download-app-btn" onclick="rakshakApp.openDownloadModal()" title="Download Rakshak AI Desktop App or Install PWA">
+          <i class="fas fa-download"></i> Download App
+        </button>
+      </div>
+
+      <div class="auth-form-header">
+        <h2>Welcome Back</h2>
+        <p>Secure access to your personnel wellness platform</p>
+      </div>
+
+      <div class="auth-toggle-pill">
+        <button id="authTabLogin" class="auth-pill-btn active">Login</button>
+        <button id="authTabRegister" class="auth-pill-btn">Register</button>
+      </div>
+
+      <p style="font-size:0.8rem; font-weight:700; color:#475569; margin-bottom:0.6rem; text-transform:uppercase; letter-spacing:0.04em;">
+        Select Operational Role
+      </p>
+
+      <!-- 4 Operational Roles: Personnel (Jawan), Medical Officer, Welfare Officer, and Commander -->
+      <div class="role-cards-grid four-col">
+        <div class="role-card-picker active" onclick="rakshakApp.selectLoginRole('soldier', this)">
+          <div class="role-card-icon"><i class="fas fa-user"></i></div>
+          <div class="role-card-title">Personnel (Jawan)</div>
+          <div class="role-card-desc">Daily check-in, real-time stress assessment & treatment indication</div>
+        </div>
+
+        <div class="role-card-picker" onclick="rakshakApp.selectLoginRole('medical', this)">
+          <div class="role-card-icon"><i class="fas fa-user-md"></i></div>
+          <div class="role-card-title">Medical Officer</div>
+          <div class="role-card-desc">Identify required treatments, prescribe clinical care & report to Welfare</div>
+        </div>
+
+        <div class="role-card-picker" onclick="rakshakApp.selectLoginRole('welfare', this)">
+          <div class="role-card-icon"><i class="fas fa-hand-holding-heart"></i></div>
+          <div class="role-card-title">Welfare Officer</div>
+          <div class="role-card-desc">Review stress ratings, validate severity & advise Commander actions</div>
+        </div>
+
+        <div class="role-card-picker" onclick="rakshakApp.selectLoginRole('commander', this)">
+          <div class="role-card-icon"><i class="fas fa-user-shield"></i></div>
+          <div class="role-card-title">Commander</div>
+          <div class="role-card-desc">Force overview, personal live stress check & approve welfare actions</div>
+        </div>
+      </div>
+
+      <!-- Login Input Fields -->
+      <div class="auth-input-group">
+        <label>Service ID / Force Username</label>
+        <input type="text" id="loginUsernameInput" class="auth-input-field" value="CRPF-94821 (Rajesh Kumar)" />
+      </div>
+
+      <div class="auth-input-group">
+        <label>Security PIN / Biometric Token</label>
+        <input type="password" class="auth-input-field" value="••••••••" />
+      </div>
+
+      <button class="btn-auth-submit" onclick="rakshakApp.handleAuthLogin()">
+        <i class="fas fa-sign-in-alt"></i> Enter Secure Welfare Portal
+      </button>
+
+      <div style="margin-top:1.5rem; font-size:0.75rem; color:#94a3b8; display:flex; align-items:center; gap:0.4rem; justify-content:center;">
+        <i class="fas fa-shield-alt" style="color:#10b981;"></i> Air-gapped from ACRs & Disciplinary Records
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================== -->
+  <!-- 2. MAIN APPLICATION WORKSPACE (SCREENS 2, 3, 4 + RESILIENCE)   -->
+  <!-- ============================================================== -->
+  <div id="mainAppShell" class="app-container" style="display: none;">
+    
+    <!-- Left Dark Navy Sidebar (matching Canva Screens 2, 3, 4) -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <img src="assets/rakshak_ai_eagle_logo.jpg?v=eagle_final" class="app-official-logo-sidebar" alt="RakshakAI Eagle Logo" />
+          <div class="sidebar-brand-text">
+            <h2>RakshakAI</h2>
+            <span>रक्षक AI • CAPF & Forces</span>
+          </div>
+        </div>
+
+        <ul class="sidebar-nav-list">
+          <li id="navLiHome">
+            <a class="sidebar-nav-item active" id="navItemHome" data-view="soldier" onclick="rakshakApp.navigateToView('soldier')">
+              <i class="fas fa-home"></i> <span>Home (Check-In)</span>
+            </a>
+          </li>
+          <li id="navLiTwin">
+            <a class="sidebar-nav-item" id="navItemTwin" data-view="twin" onclick="rakshakApp.navigateToView('twin')">
+              <i class="fas fa-brain"></i> <span>Digital Welfare Twin</span>
+            </a>
+          </li>
+          <li id="navLiMedical" style="display: none;">
+            <a class="sidebar-nav-item" id="navItemMedical" data-view="medical" onclick="rakshakApp.navigateToView('medical')">
+              <i class="fas fa-stethoscope"></i> <span>Medical Console</span>
+            </a>
+          </li>
+          <li id="navLiWelfare" style="display: none;">
+            <a class="sidebar-nav-item" id="navItemWelfare" data-view="welfare" onclick="rakshakApp.navigateToView('welfare')">
+              <i class="fas fa-clipboard-list"></i> <span>Applications & Welfare</span>
+            </a>
+          </li>
+          <li id="navLiCommander">
+            <a class="sidebar-nav-item" id="navItemCommander" data-view="commander" onclick="rakshakApp.navigateToView('commander')">
+              <i class="fas fa-user-shield"></i> <span>Commander Center</span>
+            </a>
+          </li>
+          <li id="navLiResilience">
+            <a class="sidebar-nav-item" id="navItemResilience" data-view="resilience" onclick="rakshakApp.navigateToView('resilience')">
+              <i class="fas fa-spa"></i> <span>Tactical Resilience</span>
+            </a>
+          </li>
+          <li id="navLiChat">
+            <a class="sidebar-nav-item" id="navItemChat" data-view="chat" onclick="rakshakApp.navigateToView('chat')">
+              <i class="fas fa-comments"></i> <span>Mitra AI Chat</span>
+            </a>
+          </li>
+          <li id="navLiHelpline">
+            <a class="sidebar-nav-item" id="navItemHelpline" data-view="helpline" onclick="rakshakApp.openHelplineModal()">
+              <i class="fas fa-phone-alt"></i> <span>24x7 Helplines</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-pulse-status">
+          <i class="fas fa-heartbeat"></i> <span>Live Monitoring Active</span>
+        </div>
+        <a class="sidebar-nav-item" style="color:#ef4444; margin-top:0.4rem;" onclick="rakshakApp.logoutToLanding()">
+          <i class="fas fa-sign-out-alt"></i> <span>Switch Role / Exit</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Dynamic Content Workspace -->
+    <main class="app-main">
+      
+      <!-- Topbar with Live ECG Canvas & Emergency Helpline -->
+      <header class="dashboard-topbar">
+        <div class="topbar-left">
+          <div class="topbar-greeting">
+            <h3 id="topbarTitle">Good Morning, Rajesh 👋</h3>
+            <p id="topbarSubtitle">Take a moment. Your well-being matters.</p>
+          </div>
+
+          <!-- Live Animated ECG Pulse Monitor -->
+          <div class="ecg-telemetry-pill">
+            <canvas id="ecgCanvas" width="90" height="24"></canvas>
+            <span class="ecg-label">LIVE VITAL</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Download / Install App Button -->
+          <button id="btnDownloadApp" class="btn-download-app" onclick="rakshakApp.openDownloadModal()" title="Download Rakshak AI Desktop App or Install PWA">
+            <i class="fas fa-download"></i> <span id="downloadBtnText">Download App</span>
+          </button>
+
+          <!-- Theme Switcher Button -->
+          <button id="themeToggleBtn" class="btn-theme-toggle" onclick="rakshakApp.toggleTheme()">
+            <i class="fas fa-palette"></i> <span id="themeToggleLabel">Tactical Cyber</span>
+          </button>
+
+          <!-- 24x7 Priority Emergency Helpline Button -->
+          <button class="btn-helpline-top" onclick="rakshakApp.openHelplineModal()">
+            <i class="fas fa-phone-volume"></i> 24x7 HELPLINE (14416)
+          </button>
+
+          <!-- Current User Profile Pill -->
+          <div class="user-profile-badge">
+            <div id="topbarAvatar" class="initials-avatar topbar-initials">RK</div>
+            <div class="user-info-text">
+              <h5 id="topbarUserName">Rajesh Kumar</h5>
+              <span id="topbarUserRole">Havildar (CRPF)</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: CANVA SCREEN 2 - PERSONNEL WELLNESS CHECK-IN           -->
+      <!-- ============================================================ -->
+      <section id="view_soldier" class="app-subview">
+        <div class="wellness-grid-layout">
+          
+          <!-- Left Column: Interactive Check-in Form -->
+          <div>
+            <div class="wellness-card">
+              <div class="wellness-card-header">
+                <h3><i class="fas fa-heart" style="color:#ef4444;"></i> Daily Wellness Check-In</h3>
+                <span>Confidential & Non-Punitive</span>
+              </div>
+
+              <!-- Mood Selection -->
+              <p id="checkinGreetingText" style="font-size:0.85rem; font-weight:600; margin-bottom:0.6rem; color:var(--text-main);">
+                How are you feeling today, Veer?
+              </p>
+              <div class="mood-picker-grid">
+                <div class="mood-option-card" onclick="rakshakApp.selectMood(5, this)">
+                  <span class="mood-emoji">😊</span>
+                  <span class="mood-label">Good</span>
+                </div>
+                <div class="mood-option-card active" onclick="rakshakApp.selectMood(3, this)">
+                  <span class="mood-emoji">😐</span>
+                  <span class="mood-label">Okay</span>
+                </div>
+                <div class="mood-option-card" onclick="rakshakApp.selectMood(2, this)">
+                  <span class="mood-emoji">😰</span>
+                  <span class="mood-label">Stressed</span>
+                </div>
+                <div class="mood-option-card" onclick="rakshakApp.selectMood(1, this)">
+                  <span class="mood-emoji">😫</span>
+                  <span class="mood-label">Exhausted</span>
+                </div>
+              </div>
+
+              <!-- Sleep Duration Slider -->
+              <div class="sleep-control-group">
+                <div class="sleep-slider-header">
+                  <label><i class="fas fa-moon" style="color:#0284c7;"></i> Sleep Hours Last Night</label>
+                  <span id="sleepHoursVal" class="sleep-val-display">5.5 Hours (Sub-optimal)</span>
+                </div>
+                <input type="range" id="sleepRangeInput" class="range-slider" min="0" max="12" step="0.5" value="5.5" oninput="rakshakApp.updateSleepDisplay(this.value)" />
+              </div>
+
+              <!-- LIVE STRESS INDICATOR (REAL-TIME PERCENTAGE OPTION) -->
+              <div class="live-stress-indicator-card" id="liveStressCard">
+                <div class="live-stress-header">
+                  <div class="live-stress-title-group">
+                    <span class="live-stress-pulse-dot"></span>
+                    <i class="fas fa-heartbeat" style="color:#ef4444;"></i>
+                    <h4>Live Stress Indicator</h4>
+                  </div>
+                  
+                  <!-- Percentage View Option Switcher -->
+                  <div class="indicator-option-pill-group">
+                    <button type="button" id="btnOptStressPct" class="indicator-opt-btn active" onclick="rakshakApp.setStressIndicatorMode('stress')">
+                      <i class="fas fa-tachometer-alt"></i> Stress %
+                    </button>
+                    <button type="button" id="btnOptWellbeingPct" class="indicator-opt-btn" onclick="rakshakApp.setStressIndicatorMode('wellbeing')">
+                      <i class="fas fa-shield-alt"></i> Wellbeing %
+                    </button>
+                    <button type="button" id="btnOptTreatmentIndication" class="indicator-opt-btn" onclick="rakshakApp.setStressIndicatorMode('treatment')">
+                      <i class="fas fa-stethoscope"></i> Treatment Indication
+                    </button>
+                  </div>
+                </div>
+
+                <div class="live-stress-body">
+                  <div class="live-stress-metric-display">
+                    <div class="live-stress-number-wrap">
+                      <span id="liveStressNumber" class="live-stress-pct-val">42%</span>
+                      <span id="liveStressLabel" class="live-stress-pct-sub">ESTIMATED STRESS</span>
+                    </div>
+                    <div id="liveStressBadge" class="live-stress-status-badge moderate">
+                      <i class="fas fa-exclamation-circle"></i> <span>Moderate Strain</span>
+                    </div>
+                  </div>
+
+                  <!-- Dynamic Gradient Progress Meter Bar -->
+                  <div class="live-stress-track-bar">
+                    <div id="liveStressProgressBar" class="live-stress-fill-bar" style="width: 42%;"></div>
+                  </div>
+
+                  <!-- Real-time Factors Breakdown & Guidance -->
+                  <div class="live-stress-factors-row">
+                    <div class="factor-chip" id="factorMoodChip">
+                      <i class="fas fa-smile"></i> Mood Weight: <strong id="valMoodFactor">Okay (30%)</strong>
+                    </div>
+                    <div class="factor-chip" id="factorSleepChip">
+                      <i class="fas fa-bed"></i> Sleep Deficit: <strong id="valSleepFactor">5.5h (+24%)</strong>
+                    </div>
+                  </div>
+
+                  <p id="liveStressAdviceText" class="live-stress-advice">
+                    Sub-optimal sleep and moderate mood place your autonomic load in the manageable range.
+                  </p>
+
+                  <!-- LIVE INDICATED TREATMENT GUIDANCE (INFORMATIONAL ONLY - NO THERAPY/COUNSELING EXECUTION OPTIONS) -->
+                  <div id="liveTreatmentIndicationBox" class="live-treatment-indication-box tier-medium">
+                    <!-- Populated dynamically in real time by app.js based on stress percentage -->
+                  </div>
+
+                  <div id="stressAlertTriggerBox" style="display:none; margin-top:0.85rem;">
+                    <button type="button" class="btn-open-stress-options" onclick="rakshakApp.openElevatedStressModal()">
+                      <i class="fas fa-hand-holding-heart"></i> Elevated Stress Support (Mitra AI / Phone)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Operational Stress Factors Checklist -->
+              <p style="font-size:0.85rem; font-weight:600; margin-bottom:0.6rem; color:var(--text-main);">
+                Any specific operational strain today?
+              </p>
+              <div class="triggers-checklist">
+                <label class="trigger-checkbox-label">
+                  <input type="checkbox" id="chkPatrol" checked onchange="rakshakApp.updateLiveStressIndicator()" /> Border Patrol Fatigue
+                </label>
+                <label class="trigger-checkbox-label">
+                  <input type="checkbox" id="chkFamily" checked onchange="rakshakApp.updateLiveStressIndicator()" /> Family Separation / Worry
+                </label>
+                <label class="trigger-checkbox-label">
+                  <input type="checkbox" id="chkAltitude" onchange="rakshakApp.updateLiveStressIndicator()" /> Extreme Climate / Hypoxia
+                </label>
+                <label class="trigger-checkbox-label">
+                  <input type="checkbox" id="chkLeave" checked onchange="rakshakApp.updateLiveStressIndicator()" /> Overdue Leave Anxiety
+                </label>
+              </div>
+
+              <!-- Personal Journal / Note -->
+              <p style="font-size:0.85rem; font-weight:600; margin-bottom:0.4rem; color:var(--text-main);">
+                Personal Reflection / Note (Optional)
+              </p>
+              <textarea id="checkinNote" class="journal-textarea" placeholder="Share anything on your mind. This data is strictly air-gapped from ACRs and promotion boards..."></textarea>
+
+              <button class="btn-submit-checkin" onclick="rakshakApp.submitCheckin()">
+                <i class="fas fa-check-circle"></i> Submit Confidential Check-In
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Motivation & History -->
+          <div>
+            <!-- Canva Quote Card -->
+            <div class="quote-highlight-card">
+              <h4>A healthy mind builds a stronger force.</h4>
+              <p>Taking 5 minutes to pause and reset increases combat focus, prevents long-term burnout, and keeps your comrades safer on patrol.</p>
+              <div style="margin-top:1.2rem; display:flex; gap:0.6rem;">
+                <button class="btn-welfare-action secondary" onclick="rakshakApp.navigateToView('resilience')">
+                  <i class="fas fa-spa"></i> Tactical Breathing
+                </button>
+                <button class="btn-welfare-action secondary" onclick="rakshakApp.navigateToView('chat')">
+                  <i class="fas fa-comments"></i> Talk to Mitra
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Check-Ins Table from Canva Screen 2 -->
+            <div class="wellness-card">
+              <div class="wellness-card-header">
+                <h3><i class="fas fa-history" style="color:#0284c7;"></i> Recent Check-Ins</h3>
+                <span>Past 7 Days</span>
+              </div>
+              <table class="checkin-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Mood</th>
+                    <th>Sleep</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentCheckinsBody">
+                  <tr>
+                    <td>23 Sep 2026</td>
+                    <td>😐 Okay</td>
+                    <td>6.0 hrs</td>
+                    <td><span class="risk-badge low">Logged</span></td>
+                  </tr>
+                  <tr>
+                    <td>22 Sep 2026</td>
+                    <td>😰 Stressed</td>
+                    <td>4.5 hrs</td>
+                    <td><span class="risk-badge high">Flagged</span></td>
+                  </tr>
+                  <tr>
+                    <td>21 Sep 2026</td>
+                    <td>😫 Exhausted</td>
+                    <td>4.0 hrs</td>
+                    <td><span class="risk-badge critical">Intervened</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: CANVA SCREEN 3 - DIGITAL WELFARE TWIN                  -->
+      <!-- ============================================================ -->
+      <section id="view_twin" class="app-subview" style="display: none;">
+        <!-- 4 Circular Risk Rings from Canva Screen 3 -->
+        <div class="risk-rings-grid">
+          <div class="risk-ring-card">
+            <div class="ring-svg-wrapper">
+              <svg width="90" height="90">
+                <circle class="ring-bg-circle" cx="45" cy="45" r="36"></circle>
+                <circle class="ring-fill-circle" cx="45" cy="45" r="36" stroke="#ef4444" stroke-dasharray="226" stroke-dashoffset="45"></circle>
+              </svg>
+              <div class="ring-text-center">80%</div>
+            </div>
+            <div class="risk-ring-title">Stress Risk</div>
+            <span class="risk-badge critical">High ↑</span>
+          </div>
+
+          <div class="risk-ring-card">
+            <div class="ring-svg-wrapper">
+              <svg width="90" height="90">
+                <circle class="ring-bg-circle" cx="45" cy="45" r="36"></circle>
+                <circle class="ring-fill-circle" cx="45" cy="45" r="36" stroke="#f97316" stroke-dasharray="226" stroke-dashoffset="65"></circle>
+              </svg>
+              <div class="ring-text-center">72%</div>
+            </div>
+            <div class="risk-ring-title">Burnout Risk</div>
+            <span class="risk-badge high">Elevated ↑</span>
+          </div>
+
+          <div class="risk-ring-card">
+            <div class="ring-svg-wrapper">
+              <svg width="90" height="90">
+                <circle class="ring-bg-circle" cx="45" cy="45" r="36"></circle>
+                <circle class="ring-fill-circle" cx="45" cy="45" r="36" stroke="#ef4444" stroke-dasharray="226" stroke-dashoffset="40"></circle>
+              </svg>
+              <div class="ring-text-center">82%</div>
+            </div>
+            <div class="risk-ring-title">Fatigue Risk</div>
+            <span class="risk-badge critical">High ↑</span>
+          </div>
+
+          <div class="risk-ring-card">
+            <div class="ring-svg-wrapper">
+              <svg width="90" height="90">
+                <circle class="ring-bg-circle" cx="45" cy="45" r="36"></circle>
+                <circle class="ring-fill-circle" cx="45" cy="45" r="36" stroke="#eab308" stroke-dasharray="226" stroke-dashoffset="100"></circle>
+              </svg>
+              <div class="ring-text-center">55%</div>
+            </div>
+            <div class="risk-ring-title">Welfare Risk</div>
+            <span class="risk-badge moderate">Moderate →</span>
+          </div>
+        </div>
+
+        <!-- Radar & 6-Month Trend Grid from Canva Screen 3 -->
+        <div class="twin-grid-layout">
+          <!-- Pentagon Radar Chart Card -->
+          <div class="chart-card-wrapper">
+            <div class="wellness-card-header">
+              <h3><i class="fas fa-chart-pie" style="color:#0284c7;"></i> Multi-Dimensional Resilience Radar</h3>
+              <span>Sleep, Workload, Resilience, Emotion, Leave</span>
+            </div>
+            <div class="chart-canvas-box">
+              <canvas id="twinRadarCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- 6-Month Wellness Trend Chart Card -->
+          <div class="chart-card-wrapper">
+            <div class="wellness-card-header">
+              <h3><i class="fas fa-chart-line" style="color:#10b981;"></i> 6-Month Longitudinal Trends</h3>
+              <span>Stress vs Sleep Quality vs Resilience</span>
+            </div>
+            <div class="chart-canvas-box">
+              <canvas id="twinTrendsCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Explainable Risk Factors Banner -->
+        <div class="wellness-card" style="border-left:4px solid #ef4444;">
+          <div class="wellness-card-header">
+            <h3><i class="fas fa-microchip" style="color:#ef4444;"></i> AI Diagnostic Risk Attribution</h3>
+            <span class="risk-badge critical">Immediate Welfare Action Recommended</span>
+          </div>
+          <ul style="padding-left:1.2rem; color:var(--text-main); font-size:0.9rem; line-height:1.7;">
+            <li><strong>Severe Leave Deprivation:</strong> 210 consecutive days without home leave (threshold: 90 days).</li>
+            <li><strong>Chronic Night Duty Load:</strong> 18 night-patrol shifts in the past 30 days resulting in circadian desynchrony.</li>
+            <li><strong>Family Emergency Pressure:</strong> Father admitted to ICU in rural Bihar; soldier unable to reach family regularly due to low network.</li>
+            <li><strong>Physiological Drift:</strong> Resting Heart Rate elevated by 14% over baseline, indicative of autonomic stress.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: CANVA SCREEN 4 - COMMANDER OPERATIONS DASHBOARD        -->
+      <!-- ============================================================ -->
+      <section id="view_commander" class="app-subview" style="display: none;">
+        
+        <!-- Commander Leadership Stress Check Quick Banner -->
+        <div style="background:linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(99, 102, 241, 0.08)); border:1px solid rgba(2, 132, 199, 0.25); border-radius:var(--radius-lg); padding:1rem 1.25rem; margin-bottom:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div style="width:42px; height:42px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <div>
+              <h4 style="font-size:0.98rem; font-weight:800; color:var(--text-main); margin-bottom:0.15rem;">Commander Leadership Wellness & Live Stress Assessment</h4>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">Operational resilience starts at the top. Check and track your personal live stress level anytime.</p>
+            </div>
+          </div>
+          <button type="button" class="btn-welfare-action primary" onclick="rakshakApp.navigateToView('soldier')" style="box-shadow:var(--shadow-sm);">
+            <i class="fas fa-stethoscope"></i> Check My Live Stress Level
+          </button>
+        </div>
+
+        <!-- 5 Top KPI Cards for Commander Operations -->
+        <div class="kpi-cards-grid five-col">
+          <div class="kpi-metric-card monitored">
+            <div class="kpi-metric-info">
+              <h5>Personnel Monitored</h5>
+              <div id="kpiTotalMonitored" class="kpi-metric-val">28</div>
+              <span class="kpi-metric-badge" style="color:#0284c7;">Active Force</span>
+            </div>
+            <div class="kpi-icon-badge blue"><i class="fas fa-users"></i></div>
+          </div>
+
+          <div class="kpi-metric-card critical">
+            <div class="kpi-metric-info">
+              <h5>Critical Stress</h5>
+              <div id="kpiCriticalCount" class="kpi-metric-val">3</div>
+              <span class="kpi-metric-badge" style="color:#ef4444;">Immediate Priority</span>
+            </div>
+            <div class="kpi-icon-badge red"><i class="fas fa-exclamation-triangle"></i></div>
+          </div>
+
+          <div class="kpi-metric-card high">
+            <div class="kpi-metric-info">
+              <h5>Undergoing Treatment</h5>
+              <div id="kpiUndergoingCare" class="kpi-metric-val">20</div>
+              <span class="kpi-metric-badge" style="color:#f59e0b;">Active Clinical Care</span>
+            </div>
+            <div class="kpi-icon-badge yellow"><i class="fas fa-procedures"></i></div>
+          </div>
+
+          <div class="kpi-metric-card mod">
+            <div class="kpi-metric-info">
+              <h5>Pending Approvals</h5>
+              <div id="kpiPendingApprovals" class="kpi-metric-val">12</div>
+              <span class="kpi-metric-badge" style="color:#2563eb;">Action Required</span>
+            </div>
+            <div class="kpi-icon-badge orange"><i class="fas fa-stamp"></i></div>
+          </div>
+
+          <div class="kpi-metric-card green">
+            <div class="kpi-metric-info">
+              <h5>Force Readiness</h5>
+              <div id="kpiReadinessVal" class="kpi-metric-val">88.5%</div>
+              <span class="kpi-metric-badge" style="color:#10b981;">Operational Index</span>
+            </div>
+            <div class="kpi-icon-badge green"><i class="fas fa-check-double"></i></div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Bar with Debounce -->
+        <div class="commander-filter-bar">
+          <div class="search-box-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="commanderSearchInput" class="input-commander-search" placeholder="Search soldier by name, Service ID (e.g. 'Rajesh', 'CRPF-94821', 'BSF')..." oninput="rakshakApp.handleCommanderSearch(this.value)" />
+          </div>
+
+          <div class="filter-pills-group">
+            <button class="filter-pill active" onclick="rakshakApp.filterPersonnel('all', this)">All (28)</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('pending_permissions', this)">✋ Pending Approvals</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('absence_notices', this)">📢 Direct MO Notices (&gt;75%)</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('undergoing', this)">⏳ Undergoing Care</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('treated', this)">✅ Treated</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('critical', this)">🔴 Critical Only</button>
+            <button class="filter-pill" onclick="rakshakApp.filterPersonnel('high', this)">🟠 High Risk</button>
+          </div>
+
+          <select class="sort-select-dropdown" onchange="rakshakApp.handleSortChange(this.value)">
+            <option value="default">Sort: Stress % (Highest First) ⚠️</option>
+            <option value="permissions_pending">Permissions Asked (Pending First) ✋</option>
+            <option value="treatment_status">Treatment Status (Undergoing First) ⏳</option>
+            <option value="wellbeing_asc">Wellbeing %: Lowest First</option>
+            <option value="leave_desc">Days Without Leave: Longest First ✈️</option>
+            <option value="name_asc">Soldier Name: A to Z</option>
+          </select>
+        </div>
+
+        <!-- Batch Action Dispatcher (visible when rows selected) -->
+        <div id="batchActionBar" class="batch-actions-bar" style="display: none;">
+          <div>
+            <strong id="batchSelectedCount">0 Personnel Selected</strong>
+            <span style="font-size:0.8rem; color:#cbd5e1; margin-left:0.5rem;">Commander Operational Dispatch</span>
+          </div>
+          <div class="batch-btn-group">
+            <button class="btn-batch-action primary" onclick="rakshakApp.approveAllPendingPermissions()">
+              <i class="fas fa-stamp"></i> Approve All Pending Permissions
+            </button>
+            <button class="btn-batch-action success" style="background:#10b981; color:#fff;" onclick="rakshakApp.batchApproveSelectedPermissions()">
+              <i class="fas fa-check-double"></i> Approve Selected Permissions
+            </button>
+            <button class="btn-batch-action secondary" onclick="rakshakApp.exportReportCSV()">
+              <i class="fas fa-file-export"></i> Export CSV Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Sortable Personnel Roster Table -->
+        <div class="roster-table-container">
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th style="width: 40px;"><input type="checkbox" id="selectAllCheckbox" onchange="rakshakApp.toggleSelectAll(this)" /></th>
+                <th style="min-width: 190px;">Personnel</th>
+                <th style="min-width: 130px;">Station &amp; Hardship</th>
+                <th style="min-width: 120px;">Stress &amp; Risk</th>
+                <th style="min-width: 220px;">Treatment Given (MO)</th>
+                <th style="min-width: 220px;">Permissions Asked (Welfare)</th>
+                <th style="min-width: 170px; text-align: center;">Commander Approval</th>
+                <th style="min-width: 90px; text-align: center;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="commanderTableBody">
+              <!-- Dynamically populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Commander Force Trends Chart -->
+        <div class="chart-card-wrapper" style="margin-top:2rem;">
+          <div class="wellness-card-header">
+            <h3><i class="fas fa-chart-area" style="color:#0284c7;"></i> Force Longitudinal Resilience & Alert Trends</h3>
+            <span>6-Month Force Aggregates</span>
+          </div>
+          <div class="chart-canvas-box" style="height: 280px;">
+            <canvas id="cmdTrendsCanvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: MEDICAL OFFICER CLINICAL ASSESSMENT & TREATMENT CONSOLE -->
+      <!-- ============================================================ -->
+      <section id="view_medical" class="app-subview" style="display: none;">
+        
+        <!-- Medical Header Banner -->
+        <div class="medical-console-header-card">
+          <div class="medical-console-header-left">
+            <div class="medical-badge-circle">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <div>
+              <div class="medical-title-row">
+                <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:0.2rem;">Medical Officer Clinical Assessment & Treatment Wing</h3>
+                <span class="medical-base-pill"><i class="fas fa-hospital"></i> Base Hospital • Clinical Care Desk</span>
+              </div>
+              <p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Identify required clinical treatments (1-on-1 counseling, therapy sessions, in-clinic decompression) based on live stress severity. Prescribed treatments are automatically reported to the Welfare Officer to coordinate duty relief.</p>
+            </div>
+          </div>
+          <div class="medical-officer-signature-pill">
+            <i class="fas fa-user-md" style="color:#0ea5e9; font-size:1.5rem;"></i>
+            <div>
+              <strong style="display:block; font-size:0.88rem; color:var(--text-main);">Dr. Capt. Ananya Sharma</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);">Senior Medical Officer (MO)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Top KPI Cards for Medical Console (Only Referred Patients) -->
+        <div class="kpi-cards-grid five-col">
+          <div class="kpi-metric-card monitored">
+            <div class="kpi-metric-info">
+              <h5>Patients in Queue</h5>
+              <div id="kMedTotal" class="kpi-metric-val">0</div>
+              <span class="kpi-metric-badge" style="color:#0284c7;">Referred for Care</span>
+            </div>
+            <div class="kpi-icon-badge blue"><i class="fas fa-hospital-user"></i></div>
+          </div>
+
+          <div class="kpi-metric-card critical">
+            <div class="kpi-metric-info">
+              <h5>Direct Referrals (&gt;75%)</h5>
+              <div id="kMedDirect" class="kpi-metric-val">0</div>
+              <span class="kpi-metric-badge" style="color:#ef4444;">Welfare Urgent Bypass</span>
+            </div>
+            <div class="kpi-icon-badge red"><i class="fas fa-bolt"></i></div>
+          </div>
+
+          <div class="kpi-metric-card high">
+            <div class="kpi-metric-info">
+              <h5>Commander Approved (&le;75%)</h5>
+              <div id="kMedApproved" class="kpi-metric-val">0</div>
+              <span class="kpi-metric-badge" style="color:#0284c7;">Sanctioned Applications</span>
+            </div>
+            <div class="kpi-icon-badge orange"><i class="fas fa-shield-check"></i></div>
+          </div>
+
+          <div class="kpi-metric-card mod">
+            <div class="kpi-metric-info">
+              <h5>Undergoing Care</h5>
+              <div id="kMedUndergoing" class="kpi-metric-val">0</div>
+              <span class="kpi-metric-badge" style="color:#eab308;">Active Therapy</span>
+            </div>
+            <div class="kpi-icon-badge yellow"><i class="fas fa-procedures"></i></div>
+          </div>
+
+          <div class="kpi-metric-card green">
+            <div class="kpi-metric-info">
+              <h5>Discharged / Treated</h5>
+              <div id="kMedTreated" class="kpi-metric-val">0</div>
+              <span class="kpi-metric-badge" style="color:#10b981;">Stabilized & Cleared</span>
+            </div>
+            <div class="kpi-icon-badge green"><i class="fas fa-check-circle"></i></div>
+          </div>
+        </div>
+
+        <!-- Clinical Queue Isolation Protocol Notice -->
+        <div class="medical-access-notice">
+          <i class="fas fa-user-shield" style="font-size: 1.25rem; color:#0ea5e9; flex-shrink: 0;"></i>
+          <div>
+            <strong>Clinical Triage Isolation:</strong> The Medical Officer console <strong>only displays personnel actively referred for treatment</strong> (either directly sent by Welfare Officer due to stress &gt; 75%, or approved by Commander for stress &le; 75%). Unreferred personnel on regular duty are strictly excluded from this clinical queue.
+          </div>
+        </div>
+
+        <!-- Medical Filter & Search Bar -->
+        <div class="commander-filter-bar">
+          <div class="search-box-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="medicalSearchInput" class="input-commander-search" placeholder="Search referred patient by name, Service ID (e.g. 'Rajesh', 'CRPF-94821')..." oninput="rakshakApp.handleMedicalSearch(this.value)" />
+          </div>
+
+          <div class="filter-pills-group">
+            <button class="filter-pill active" onclick="rakshakApp.filterMedical('all', this)">All Patients</button>
+            <button class="filter-pill" onclick="rakshakApp.filterMedical('direct', this)">⚡ Direct Welfare Referrals (&gt;75%)</button>
+            <button class="filter-pill" onclick="rakshakApp.filterMedical('commander', this)">🛡️ Commander Approved (&le;75%)</button>
+            <button class="filter-pill" onclick="rakshakApp.filterMedical('undergoing', this)">⏳ Undergoing Treatment</button>
+            <button class="filter-pill" onclick="rakshakApp.filterMedical('treated', this)">✅ Treated / Discharged</button>
+          </div>
+
+          <select class="sort-select-dropdown" onchange="rakshakApp.handleMedicalSortChange(this.value)">
+            <option value="stress_desc">Sort: Live Stress % (Highest First) ⚠️</option>
+            <option value="stress_asc">Sort: Live Stress % (Lowest First)</option>
+            <option value="name_asc">Patient Name (A to Z)</option>
+          </select>
+        </div>
+
+        <!-- Medical Treatment Roster Grid / Cards -->
+        <div id="medicalPersonnelContainer" class="medical-cards-grid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: WELFARE OFFICER ADVISORY & VALIDATION CONSOLE          -->
+      <!-- ============================================================ -->
+      <section id="view_welfare" class="app-subview" style="display: none;">
+        
+        <!-- Welfare Header Banner -->
+        <div class="welfare-console-header-card">
+          <div class="welfare-console-header-left">
+            <div class="welfare-badge-circle">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <div>
+              <div class="welfare-title-row">
+                <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:0.2rem;">Welfare Officer Advisory & Force Validation Console</h3>
+                <span class="welfare-airgap-pill"><i class="fas fa-user-secret"></i> Air-Gapped Confidential Backchannel</span>
+              </div>
+              <p style="font-size:0.83rem; color:var(--text-muted); margin:0;">Review live stress ratings across all 28 force personnel, validate clinical severity, and pass confidential action suggestions to the Commanding Officer. <em>All advisories are completely isolated from personnel files.</em></p>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+            <button type="button" class="btn-table-action" onclick="rakshakApp.resetAllWorkflowData()" style="background:rgba(239, 68, 68, 0.12); border:1px solid rgba(239, 68, 68, 0.35); color:#ef4444; font-weight:700; padding:0.55rem 1rem; border-radius:var(--radius-sm); font-size:0.8rem; cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem; transition:all 0.2s;" title="Reset all referrals, applications, and treatment approvals to initial state">
+              <i class="fas fa-redo-alt"></i> Reset All Options
+            </button>
+            <div class="welfare-officer-signature-pill">
+              <i class="fas fa-user-check" style="color:#10b981; font-size:1.4rem;"></i>
+              <div>
+                <strong style="display:block; font-size:0.88rem; color:var(--text-main);">Maj. Sunita Rao</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Unit Welfare Officer</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Welfare Sub-Navigation Tabs -->
+        <div class="welfare-subtabs-bar">
+          <button id="btnWelfareSubTab_triage" class="welfare-subtab-btn active" onclick="rakshakApp.switchWelfareSubTab('triage')">
+            <i class="fas fa-heart-pulse"></i> Stress Overview &amp; Action Center (75% Protocol)
+            <span id="kWelfareStressBadge" class="subtab-count-badge">28</span>
+          </button>
+          <button id="btnWelfareSubTab_apps" class="welfare-subtab-btn" onclick="rakshakApp.switchWelfareSubTab('applications')">
+            <i class="fas fa-clipboard-list"></i> Applications &amp; Treatment Log Book
+            <span id="kWelfareAppsBadge" class="subtab-count-badge">0</span>
+          </button>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SUBVIEW 1: STRESS OVERVIEW & TRIAGE ACTION CENTER (75% PROTOCOL) -->
+        <!-- ============================================================ -->
+        <div id="welfareSubView_triage">
+          <!-- 4 Top KPI Cards for Welfare Triage -->
+          <div class="kpi-cards-grid">
+            <div class="kpi-metric-card monitored">
+              <div class="kpi-metric-info">
+                <h5>Total Personnel</h5>
+                <div id="kWelfareTotal" class="kpi-metric-val">28</div>
+                <span class="kpi-metric-badge" style="color:#0284c7;">Active Roster</span>
+              </div>
+              <div class="kpi-icon-badge blue"><i class="fas fa-users"></i></div>
+            </div>
+
+            <div class="kpi-metric-card critical">
+              <div class="kpi-metric-info">
+                <h5>Stress &gt; 75% (Direct MO)</h5>
+                <div id="kWelfareAbove75" class="kpi-metric-val">10</div>
+                <span class="kpi-metric-badge" style="color:#ef4444;">⚡ Direct MO Referral</span>
+              </div>
+              <div class="kpi-icon-badge red"><i class="fas fa-bolt"></i></div>
+            </div>
+
+            <div class="kpi-metric-card high">
+              <div class="kpi-metric-info">
+                <h5>Stress &le; 75% (Commander App)</h5>
+                <div id="kWelfareBelow75" class="kpi-metric-val">18</div>
+                <span class="kpi-metric-badge" style="color:#0284c7;">📝 Commander Application</span>
+              </div>
+              <div class="kpi-icon-badge orange"><i class="fas fa-file-signature"></i></div>
+            </div>
+
+            <div class="kpi-metric-card mod">
+              <div class="kpi-metric-info">
+                <h5>In MO Treatment Queue</h5>
+                <div id="kWelfareInMoQueue" class="kpi-metric-val">0</div>
+                <span class="kpi-metric-badge" style="color:#10b981;">Active Patients</span>
+              </div>
+              <div class="kpi-icon-badge green"><i class="fas fa-user-doctor"></i></div>
+            </div>
+          </div>
+
+          <!-- Protocol Guidance Box -->
+          <div class="welfare-protocol-notice">
+            <i class="fas fa-scale-balanced" style="font-size: 1.3rem; color:#f59e0b; flex-shrink:0;"></i>
+            <div style="font-size: 0.83rem; line-height: 1.5; color:var(--text-main);">
+              <strong>Welfare Officer Decision Protocol:</strong> First inspect live stress levels below. 
+              If deemed necessary (<strong>Stress &gt; 75%</strong>), directly dispatch a treatment request to the Medical Officer based on severity (counseling, therapy) <em>without waiting for prior Commander approval</em>.
+              If <strong>Stress &le; 75%</strong>, send a formal application to the Commander — once approved by the Commander, the personnel is forwarded to the Medical Officer with options to treat.
+            </div>
+          </div>
+
+          <!-- Welfare Triage Filter & Search Bar -->
+          <div class="commander-filter-bar">
+            <div class="search-box-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="welfareTriageSearchInput" class="input-commander-search" placeholder="Search personnel by name, Service ID (e.g. 'Rajesh', 'CRPF-94821', 'BSF')..." oninput="rakshakApp.handleWelfareTriageSearch(this.value)" />
+            </div>
+
+            <div class="filter-pills-group">
+              <button class="filter-pill active" onclick="rakshakApp.filterWelfareTriage('all', this)">All (28)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareTriage('above75', this)">⚡ Stress &gt; 75% (Direct MO)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareTriage('below75', this)">📝 Stress &le; 75% (Commander App)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareTriage('in_mo', this)">⏳ Sent to MO</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareTriage('cmd_approved', this)">✅ Commander Approved</button>
+            </div>
+
+            <select class="sort-select-dropdown" id="welfareTriageSortSelect" onchange="rakshakApp.handleWelfareTriageSortChange(this.value)">
+              <option value="stress_desc">Sort: Live Stress % (Highest First) ⚠️</option>
+              <option value="stress_asc">Sort: Live Stress % (Lowest First)</option>
+              <option value="name_asc">Personnel Name (A to Z)</option>
+            </select>
+          </div>
+
+          <!-- Stress Triage Table -->
+          <div class="welfare-applications-container">
+            <table class="welfare-applications-table">
+              <thead>
+                <tr>
+                  <th style="width: 240px;">Personnel</th>
+                  <th style="width: 170px;">Live Stress %</th>
+                  <th style="width: 220px;">Vitals &amp; Fatigue Indicators</th>
+                  <th style="width: 220px;">Protocol Classification</th>
+                  <th style="text-align: center; width: 260px;">Welfare Officer Action</th>
+                </tr>
+              </thead>
+              <tbody id="welfareStressTriageTableBody">
+                <!-- Populated dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SUBVIEW 2: APPLICATIONS & SYSTEMATIC MEDICAL TREATMENT LOG BOOK -->
+        <!-- ============================================================ -->
+        <div id="welfareSubView_apps" style="display: none;">
+          <!-- KPI Metrics for Applications Logbook -->
+          <div class="kpi-cards-grid">
+            <div class="kpi-metric-card monitored">
+              <div class="kpi-metric-info">
+                <h5>Total Applications Logged</h5>
+                <div id="kAppTotal" class="kpi-metric-val">0</div>
+                <span class="kpi-metric-badge" style="color:#0284c7;">Registry</span>
+              </div>
+              <div class="kpi-icon-badge blue"><i class="fas fa-clipboard-list"></i></div>
+            </div>
+
+            <div class="kpi-metric-card mod">
+              <div class="kpi-metric-info">
+                <h5>Discharged / Treated</h5>
+                <div id="kAppDone" class="kpi-metric-val">0</div>
+                <span class="kpi-metric-badge" style="color:#10b981;">Stabilized</span>
+              </div>
+              <div class="kpi-icon-badge green"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="kpi-metric-card high">
+              <div class="kpi-metric-info">
+                <h5>Undergoing Care</h5>
+                <div id="kAppUndergoing" class="kpi-metric-val">0</div>
+                <span class="kpi-metric-badge" style="color:#f59e0b;">In Session</span>
+              </div>
+              <div class="kpi-icon-badge yellow"><i class="fas fa-procedures"></i></div>
+            </div>
+
+            <div class="kpi-metric-card critical">
+              <div class="kpi-metric-info">
+                <h5>Direct MO Referrals (&gt;75%)</h5>
+                <div id="kAppAbove75" class="kpi-metric-val">0</div>
+                <span class="kpi-metric-badge" style="color:#ef4444;">Direct MO</span>
+              </div>
+              <div class="kpi-icon-badge red"><i class="fas fa-bolt"></i></div>
+            </div>
+          </div>
+
+          <!-- Applications Filter & Search Bar -->
+          <div class="commander-filter-bar">
+            <div class="search-box-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="welfareAppsSearchInput" class="input-commander-search" placeholder="Search log book by name, Service ID, modality, force, station..." oninput="rakshakApp.handleWelfareAppsSearch(this.value)" />
+            </div>
+
+            <div class="filter-pills-group">
+              <button class="filter-pill active" onclick="rakshakApp.filterWelfareApps('all', this)">All (28)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('above80', this)">🔴 Stress &gt; 75% (Direct MO Referral)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('below80', this)">🔵 Stress &le; 75% (Commander Application)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('undergoing', this)">⏳ About to be Done</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('treated', this)">✅ Done (Treated)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('reported', this)">📢 Reported to CO</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfareApps('pending_permission', this)">✋ Permission Pending</button>
+            </div>
+
+            <select class="sort-select-dropdown" id="welfareAppsSortSelect" onchange="rakshakApp.handleWelfareAppsSortChange(this.value)">
+              <option value="stress_desc">Sort: Live Stress % (Highest First) ⚠️</option>
+              <option value="stress_asc">Sort: Live Stress % (Lowest First)</option>
+              <option value="status_undergoing">Status: About to be Done First</option>
+              <option value="status_treated">Status: Done (Treated) First</option>
+              <option value="name_asc">Personnel Name (A to Z)</option>
+            </select>
+          </div>
+
+          <!-- Systematic Medical Applications Log Book Table -->
+          <div class="welfare-applications-container">
+            <table class="welfare-applications-table">
+              <thead>
+                <tr>
+                  <th style="width: 130px;">Entry ID &amp; Date</th>
+                  <th style="width: 230px;">Personnel</th>
+                  <th style="width: 150px;">Live Stress %</th>
+                  <th>Medical Treatment Prescribed</th>
+                  <th style="width: 180px;">Treatment Status</th>
+                  <th>Prescribing MO &amp; Regimen</th>
+                  <th style="width: 220px; text-align: center;">Commander Action (Duty Absence)</th>
+                </tr>
+              </thead>
+              <tbody id="welfareApplicationsTableBody">
+                <!-- Populated dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SUBVIEW 2: FORCE PERSONNEL OVERVIEW & VALIDATION ROSTER     -->
+        <!-- ============================================================ -->
+        <div id="welfareSubView_roster" style="display: none;">
+          <!-- 4 Top KPI Cards for Welfare Console -->
+          <div class="kpi-cards-grid">
+            <div class="kpi-metric-card monitored">
+              <div class="kpi-metric-info">
+                <h5>Personnel Under Review</h5>
+                <div id="kWelfareTotal" class="kpi-metric-val">28</div>
+                <span class="kpi-metric-badge" style="color:#0284c7;">Active Roster</span>
+              </div>
+              <div class="kpi-icon-badge blue"><i class="fas fa-users"></i></div>
+            </div>
+
+            <div class="kpi-metric-card mod">
+              <div class="kpi-metric-info">
+                <h5>Ratings Validated</h5>
+                <div id="kWelfareValidated" class="kpi-metric-val">24</div>
+                <span class="kpi-metric-badge" style="color:#10b981;">Clinically Verified</span>
+              </div>
+              <div class="kpi-icon-badge green"><i class="fas fa-check-double"></i></div>
+            </div>
+
+            <div class="kpi-metric-card critical">
+              <div class="kpi-metric-info">
+                <h5>Critical Stress (≥70%)</h5>
+                <div id="kWelfareCritical" class="kpi-metric-val">3</div>
+                <span class="kpi-metric-badge" style="color:#ef4444;">Urgent Intervention</span>
+              </div>
+              <div class="kpi-icon-badge red"><i class="fas fa-exclamation-triangle"></i></div>
+            </div>
+
+            <div class="kpi-metric-card high">
+              <div class="kpi-metric-info">
+                <h5>Advisories to Commander</h5>
+                <div id="kWelfareAdvisories" class="kpi-metric-val">5</div>
+                <span class="kpi-metric-badge" style="color:#f97316;">Action Dispatched</span>
+              </div>
+              <div class="kpi-icon-badge orange"><i class="fas fa-paper-plane"></i></div>
+            </div>
+          </div>
+
+          <!-- Welfare Filter & Search Bar -->
+          <div class="commander-filter-bar">
+            <div class="search-box-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="welfareSearchInput" class="input-commander-search" placeholder="Search soldier by name, Service ID (e.g. 'Rajesh', 'CRPF-94821', 'BSF')..." oninput="rakshakApp.handleWelfareSearch(this.value)" />
+            </div>
+
+            <div class="filter-pills-group">
+              <button class="filter-pill active" onclick="rakshakApp.filterWelfare('all', this)">All (28)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('pending_validation', this)">⏳ Pending Validation</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('has_advisory', this)">📩 Active Advisories</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('critical', this)">🔴 Critical (≥70%)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('high', this)">🟠 High (55-69%)</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('moderate', this)">🟡 Moderate</button>
+              <button class="filter-pill" onclick="rakshakApp.filterWelfare('low', this)">🟢 Low</button>
+            </div>
+
+            <select class="sort-select-dropdown" onchange="rakshakApp.handleWelfareSortChange(this.value)">
+              <option value="stress_desc">Sort: Stress % (Highest First) ⚠️</option>
+              <option value="stress_asc">Sort: Stress % (Lowest First)</option>
+              <option value="leave_desc">Days Without Leave (Longest First) ✈️</option>
+              <option value="name_asc">Soldier Name (A to Z)</option>
+            </select>
+          </div>
+
+          <!-- Welfare Personnel Review Roster Cards / Grid -->
+          <div id="welfarePersonnelContainer" class="welfare-cards-grid">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- WELFARE BOTTOM HORIZONTAL SCROLLER: LIVE PERSONNEL CAROUSEL -->
+        <!-- ============================================================ -->
+        <div class="welfare-bottom-scroller-section">
+          <div class="welfare-scroller-header">
+            <div class="welfare-scroller-title">
+              <i class="fas fa-stream" style="color: var(--accent-blue);"></i>
+              <h4>Personnel Live Status &amp; Fast Action Scroller</h4>
+              <span class="scroller-pill-tag"><i class="fas fa-satellite-dish"></i> Live Stream (28 Personnel)</span>
+            </div>
+            <div class="welfare-scroller-controls">
+              <span class="scroller-hint-text"><i class="fas fa-arrows-alt-h"></i> Horizontal Scroll</span>
+              <button type="button" class="btn-scroller-arrow" onclick="rakshakApp.scrollWelfareScroller('left')" title="Scroll Left">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button type="button" class="btn-scroller-arrow" onclick="rakshakApp.scrollWelfareScroller('right')" title="Scroll Right">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          <div id="welfareHorizontalScroller" class="welfare-horizontal-scroller-track">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: TACTICAL RESILIENCE & MENTAL RECOVERY SUITE (NO GAMES) -->
+      <!-- ============================================================ -->
+      <section id="view_resilience" class="app-subview" style="display: none;">
+        <div class="wellness-card" style="background: linear-gradient(135deg, #06152d, #0b2654); color:#fff; border-color: rgba(56, 189, 248, 0.3);">
+          <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:0.4rem;">
+            <i class="fas fa-spa" style="color:#10b981;"></i> Tactical Resilience & Mental Recovery Center
+          </h2>
+          <p style="color:#cbd5e1; font-size:0.9rem;">
+            Evidence-based military neuro-resilience protocols used by elite forces to drop cortisol, regulate the autonomic nervous system, and accelerate physical recovery.
+          </p>
+        </div>
+
+        <div class="resilience-grid">
+          
+          <!-- 1. Tactical 4-4-4-4 Box Breathing Visualizer -->
+          <div class="resilience-panel">
+            <div class="wellness-card-header">
+              <h3><i class="fas fa-lungs" style="color:#10b981;"></i> Tactical Box Breathing (4-4-4-4)</h3>
+              <span class="risk-badge low">Special Forces Protocol</span>
+            </div>
+            
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+              Calms acute adrenaline surges and resets heart rate variability in high-stress operational deployments.
+            </p>
+
+            <div class="box-breathing-stage">
+              <div id="breathingDisc" class="breathing-pulsing-disc">
+                <div class="breathing-inner-core">
+                  <span id="breathPhaseText" class="breath-phase-text">READY</span>
+                  <span id="breathTimerText" class="breath-timer-text">4s</span>
+                </div>
+              </div>
+
+              <div class="breath-controls-row">
+                <button id="btnStartBreathing" class="btn-breath-action start" onclick="rakshakApp.toggleBoxBreathing()">
+                  <i class="fas fa-play"></i> Start Session
+                </button>
+                <button class="btn-breath-action reset" onclick="rakshakApp.resetBoxBreathing()">
+                  <i class="fas fa-redo"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Progressive Muscle Relaxation (PMR) -->
+          <div class="resilience-panel">
+            <div class="wellness-card-header">
+              <h3><i class="fas fa-walking" style="color:#0284c7;"></i> Post-Patrol Muscle Relaxation (PMR)</h3>
+              <span class="risk-badge low">Physical Recovery</span>
+            </div>
+
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+              Step-by-step neuromuscular decompression to eliminate physical tension stored during long patrols.
+            </p>
+
+            <div id="pmrStep1" class="pmr-step-item active">
+              <div class="pmr-step-number">1</div>
+              <div class="pmr-step-content">
+                <h5>Lower Extremities (Feet & Calves)</h5>
+                <p>Curl your toes downward, tighten your calves for 5 seconds, then breathe out and completely release.</p>
+              </div>
+            </div>
+
+            <div id="pmrStep2" class="pmr-step-item">
+              <div class="pmr-step-number">2</div>
+              <div class="pmr-step-content">
+                <h5>Thighs & Lower Back</h5>
+                <p>Tighten your thigh muscles and press your lower back firmly into the bed/ground. Hold 5s, release.</p>
+              </div>
+            </div>
+
+            <div id="pmrStep3" class="pmr-step-item">
+              <div class="pmr-step-number">3</div>
+              <div class="pmr-step-content">
+                <h5>Shoulders & Heavy Vest Release</h5>
+                <p>Hunch your shoulders all the way to your ears to relieve patrol body armor weight. Hold 5s, drop shoulders loose.</p>
+              </div>
+            </div>
+
+            <div id="pmrStep4" class="pmr-step-item">
+              <div class="pmr-step-number">4</div>
+              <div class="pmr-step-content">
+                <h5>Hands & Forearms</h5>
+                <p>Clench your fists tightly as if holding gear. Hold for 5 seconds, then unclench and spread your fingers wide.</p>
+              </div>
+            </div>
+
+            <div style="margin-top:1rem; display:flex; justify-content:space-between;">
+              <button class="btn-table-action" onclick="rakshakApp.nextPmrStep()">
+                <i class="fas fa-forward"></i> Next Zone
+              </button>
+              <button class="btn-table-action" onclick="rakshakApp.resetPmr()">
+                <i class="fas fa-redo"></i> Reset Protocol
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 3. High-Altitude Sleep Hygiene & Acoustic Ambient Sound Station -->
+        <div class="wellness-card">
+          <div class="wellness-card-header">
+            <h3><i class="fas fa-bed" style="color:#8b5cf6;"></i> High-Altitude & Night-Duty Sleep Hygiene Station</h3>
+            <span class="risk-badge low">Synthesized Soundscapes</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.5rem;">
+            Combat insomnia and hypoxic sleep disruption with military ambient acoustics generated in real-time via Web Audio.
+          </p>
+
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem;">
+            <div class="ambient-sound-card">
+              <div class="sound-info-group">
+                <i class="fas fa-water sound-icon"></i>
+                <div>
+                  <h5 style="font-weight:700; font-size:0.9rem;">Himalayan Stream</h5>
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Calming pink noise</span>
+                </div>
+              </div>
+              <button id="btnSoundStream" class="btn-sound-play" onclick="rakshakApp.toggleAmbientSound('stream')">
+                <i class="fas fa-play"></i> Play
+              </button>
+            </div>
+
+            <div class="ambient-sound-card">
+              <div class="sound-info-group">
+                <i class="fas fa-cloud-rain sound-icon"></i>
+                <div>
+                  <h5 style="font-weight:700; font-size:0.9rem;">Rain on Canvas Tent</h5>
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Acoustic isolation</span>
+                </div>
+              </div>
+              <button id="btnSoundRain" class="btn-sound-play" onclick="rakshakApp.toggleAmbientSound('rain')">
+                <i class="fas fa-play"></i> Play
+              </button>
+            </div>
+
+            <div class="ambient-sound-card">
+              <div class="sound-info-group">
+                <i class="fas fa-wind sound-icon"></i>
+                <div>
+                  <h5 style="font-weight:700; font-size:0.9rem;">Breeze & Deep Drone</h5>
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Delta sleep induction</span>
+                </div>
+              </div>
+              <button id="btnSoundWind" class="btn-sound-play" onclick="rakshakApp.toggleAmbientSound('wind')">
+                <i class="fas fa-play"></i> Play
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- VIEW: MITRA AI COMPANION                                     -->
+      <!-- ============================================================ -->
+      <section id="view_chat" class="app-subview" style="display: none;">
+        <div class="chat-page-wrapper">
+          <div class="chat-header-bar">
+            <div class="chat-companion-profile">
+              <img src="assets/rakshak_ai_eagle_logo.jpg?v=eagle_final" style="width:44px; height:44px; border-radius:12px; object-fit:cover; border:2px solid #00e676; box-shadow:0 0 12px rgba(0,230,118,0.4);" alt="RakshakAI Mitra" />
+              <div>
+                <h4 style="font-weight:700; font-size:1rem; color:var(--text-main);">Mitra AI (रक्षक सहायक)</h4>
+                <span style="font-size:0.75rem; color:#10b981; font-weight:600;">● Online • 100% Confidential • Non-Punitive</span>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.8rem;">
+              <button id="btnToggleChatVoice" class="btn-theme-toggle" title="Voice Output">
+                <i class="fas fa-volume-up"></i> <span>Voice Audio</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="chatMessagesArea" class="chat-messages-area">
+            <!-- Messages populated by chatbot.js -->
+          </div>
+
+          <div id="chatQuickRepliesTray" class="chat-quick-tray">
+            <!-- Quick Chips -->
+          </div>
+
+          <div class="chat-input-row">
+            <input type="text" id="chatInputField" class="chat-text-input" placeholder="Type in Hindi or English (e.g. 'Ek joke sunao', 'Ghar ki yaad aa rahi hai', 'Neend nahi aa rahi')..." />
+            <button id="chatSendBtn" class="btn-chat-send">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- 3. MODALS                                                      -->
+  <!-- ============================================================== -->
+
+  <!-- Modal: Elevated Stress Support Menu (Triggered at >= 60% Stress) -->
+  <div id="elevatedStressModal" class="modal-overlay">
+    <div class="modal-content-box stress-support-modal-box">
+      <button class="modal-close-btn" onclick="rakshakApp.closeElevatedStressModal()">&times;</button>
+      
+      <div class="stress-modal-header">
+        <div class="stress-alert-circle">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <h3 id="stressModalTitle">Elevated Stress Level Detected (<span id="stressModalPct">68%</span>)</h3>
+        <p id="stressModalSubtitle">Your health and dignity are protected. We detected your estimated stress load is at <strong id="stressModalPctStrong">68%</strong>. Choose how you would like confidential support right now:</p>
+      </div>
+
+      <div class="stress-support-options-grid">
+        <!-- Option 1: Talk to Mitra AI -->
+        <div class="support-choice-card mitra" onclick="rakshakApp.chooseStressSupport('mitra')">
+          <div class="choice-icon-wrap mitra">
+            <i class="fas fa-robot"></i>
+            <span class="online-indicator-dot"></span>
+          </div>
+          <div class="choice-info-wrap">
+            <div class="choice-badge-row">
+              <h4>Talk to Mitra AI</h4>
+              <span class="choice-status-pill green">Instant • 24x7</span>
+            </div>
+            <p>Confidential, non-punitive listening in Hindi or English. Completely air-gapped from your ACR and service file.</p>
+            <div class="choice-action-link">
+              <span>Open Mitra Support Chat</span> <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 2: Talk to a Counsellor on Phone -->
+        <div class="support-choice-card phone" onclick="rakshakApp.chooseStressSupport('phone')">
+          <div class="choice-icon-wrap phone">
+            <i class="fas fa-phone-volume"></i>
+          </div>
+          <div class="choice-info-wrap">
+            <div class="choice-badge-row">
+              <h4>Talk to a Counsellor on Phone</h4>
+              <span class="choice-status-pill blue">Toll-Free • 100% Confidential</span>
+            </div>
+            <p>Direct call to a certified military psychiatrist or crisis counselor via Tele-MANAS (14416) or KIRAN helpline.</p>
+            <div class="choice-action-link">
+              <span>Connect by Phone (14416 / KIRAN)</span> <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stress-modal-footer">
+        <button type="button" class="btn-dismiss-stress-modal" onclick="rakshakApp.closeElevatedStressModal()">
+          I'm okay for now — Continue Daily Check-In
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Mandatory Digital Welfare Consent -->
+  <div id="consentModal" class="modal-overlay">
+    <div class="modal-content-box">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <div style="font-size:2.5rem; color:#0284c7; margin-bottom:0.5rem;"><i class="fas fa-shield-alt"></i></div>
+        <h3 style="font-size:1.4rem; font-weight:800; color:var(--text-main);">Voluntary Digital Welfare Consent</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem;">Personnel Data Privacy & Dignity Guarantee</p>
+      </div>
+
+      <div style="background:var(--bg-card-subtle); border:1px solid var(--border-card); border-radius:var(--radius-md); padding:1.2rem; font-size:0.85rem; line-height:1.6; color:var(--text-main); margin-bottom:1.5rem;">
+        <p><strong>1. Non-Punitive Assurance:</strong> All self-reported mood, sleep, and emotional health indicators are processed solely for welfare support and preventive care.</p>
+        <p style="margin-top:0.6rem;"><strong>2. Strict Air-Gapping:</strong> Your stress metrics are cryptographically isolated from your Annual Confidential Report (ACR), disciplinary files, and promotion boards.</p>
+        <p style="margin-top:0.6rem;"><strong>3. Voluntary Participation:</strong> You may opt-in or opt-out of wearable biometric syncing at any time without negative consequence.</p>
+      </div>
+
+      <div style="display:flex; gap:1rem;">
+        <button class="btn-auth-submit" style="margin-top:0; background:#10b981;" onclick="rakshakApp.confirmConsent(true)">
+          <i class="fas fa-check"></i> I Consent to Welfare Monitoring
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: 24x7 Priority Helplines -->
+  <div id="helplineModal" class="modal-overlay">
+    <div class="modal-content-box">
+      <button class="modal-close-btn">&times;</button>
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <div style="font-size:2.5rem; color:#ef4444; margin-bottom:0.5rem;"><i class="fas fa-phone-volume"></i></div>
+        <h3 style="font-size:1.4rem; font-weight:800; color:var(--text-main);">24x7 Emergency Welfare Helplines</h3>
+        <p style="color:var(--text-muted); font-size:0.85rem;">Confidential, Toll-Free Professional Support Available Immediately</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <a href="tel:14416" style="text-decoration:none;">
+          <div style="background:#fee2e2; border:2px solid #ef4444; border-radius:var(--radius-md); padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h4 style="font-size:1.1rem; font-weight:800; color:#991b1b;">Tele-MANAS National Mental Health</h4>
+              <p style="font-size:0.8rem; color:#b91c1c;">Toll-free 24/7 psychiatric & crisis counseling (Govt. of India)</p>
+            </div>
+            <span style="font-size:1.3rem; font-weight:800; color:#ef4444; font-family:'JetBrains Mono';">14416</span>
+          </div>
+        </a>
+
+        <a href="tel:18005990019" style="text-decoration:none;">
+          <div style="background:var(--bg-card-subtle); border:1px solid var(--border-card); border-radius:var(--radius-md); padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <h4 style="font-size:1rem; font-weight:700; color:var(--text-main);">KIRAN Mental Health Helpline</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Dedicated Armed Forces & CAPF distress helpline</p>
+            </div>
+            <span style="font-size:1.1rem; font-weight:800; color:var(--primary); font-family:'JetBrains Mono';">1800-599-0019</span>
+          </div>
+        </a>
+
+        <div style="background:var(--bg-card-subtle); border:1px solid var(--border-card); border-radius:var(--radius-md); padding:1.2rem; display:flex; align-items:center; justify-content:space-between;">
+          <div>
+            <h4 style="font-size:1rem; font-weight:700; color:var(--text-main);">Unit Medical Officer (MO) Desk</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Base clinic on-duty doctor direct line</p>
+          </div>
+          <span style="font-size:1.1rem; font-weight:800; color:var(--accent-green); font-family:'JetBrains Mono';">Ext. 102</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Soldier Profile Deep-Dive & Welfare Action Dispatcher -->
+  <div id="personnelDetailModal" class="modal-overlay">
+    <div class="modal-content-box" style="max-width:720px;">
+      <button class="modal-close-btn">&times;</button>
+      
+      <div id="soldierModalContent">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Welfare Officer Advise Commander Modal -->
+  <div id="welfareAdviseModal" class="modal-overlay">
+    <div class="modal-content-box welfare-modal-box" style="max-width: 680px;">
+      <button class="modal-close-btn" onclick="rakshakApp.closeWelfareAdviseModal()">&times;</button>
+      
+      <div class="welfare-modal-header">
+        <div class="welfare-modal-icon-badge">
+          <i class="fas fa-paper-plane"></i>
+        </div>
+        <div>
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:0.2rem;">Pass Action Advisory to Commanding Officer</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">Confidential Welfare Recommendation for <strong id="wModalSoldierName">Havildar Rajesh Kumar</strong> (<span id="wModalSoldierId">CRPF-94821</span>)</p>
+        </div>
+      </div>
+
+      <!-- Personnel Stress Summary Strip -->
+      <div class="welfare-modal-soldier-summary">
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Current Live Stress</span>
+          <span class="wmodal-value highlight" id="wModalStressPct">84% (Critical)</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Overdue Leave</span>
+          <span class="wmodal-value" id="wModalLeaveDays">210 Days</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Night Duty Shifts</span>
+          <span class="wmodal-value" id="wModalNightShifts">18 Shifts</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Rating Validation</span>
+          <span class="wmodal-value" id="wModalValidationStatus" style="color:#10b981;">Validated</span>
+        </div>
+      </div>
+
+      <form id="welfareAdviseForm" onsubmit="rakshakApp.submitWelfareAdvisory(event)">
+        <input type="hidden" id="wAdviseSoldierId" value="" />
+
+        <!-- Form Field 1: Action Type -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;"><i class="fas fa-tasks" style="color:#0284c7;"></i> Recommended Commander Action Type</label>
+          <select id="wAdviseActionType" class="auth-input-field" onchange="rakshakApp.handleAdvisoryTypeSelect(this.value)" required>
+            <option value="Sanction Emergency Leave & 1-to-1 Personal Care">Sanction Emergency Leave & 1-to-1 Personal Care (Urgent Dual-Action)</option>
+            <option value="Sanction 14-Day Compassionate Leave">Sanction 14-Day Compassionate Leave</option>
+            <option value="Reduce Workload & Shift Duty Cap">Reduce Workload & Shift Duty Cap (Night patrol restriction)</option>
+            <option value="Arrange 1-to-1 Personal Care for 3-5 Days">Arrange 1-to-1 Personal Care for 3-5 Days (Dedicated Buddy & Welfare Supervision)</option>
+            <option value="Rotational Peace Station Transfer">Recommend Rotational Peace Station Transfer</option>
+            <option value="Sub-Unit Decompression & Rest Rotation">Sub-Unit Decompression & Rest Rotation (48h Mandate)</option>
+          </select>
+        </div>
+
+        <!-- Form Field 2: Severity Level -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;"><i class="fas fa-exclamation-triangle" style="color:#f97316;"></i> Action Urgency & Severity Level</label>
+          <select id="wAdviseSeverity" class="auth-input-field" required>
+            <option value="Critical">Critical - Immediate Commander Intervention Required</option>
+            <option value="High">High Priority - Action Within 24-48 Hours</option>
+            <option value="Moderate">Moderate Priority - Implement in Next Roster Cycle</option>
+            <option value="Routine">Routine - Maintain Proactive Monitoring</option>
+          </select>
+        </div>
+
+        <!-- Form Field 3: Specific Suggested Action Description -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;"><i class="fas fa-clipboard-list" style="color:#10b981;"></i> Suggested Action Details for Commander</label>
+          <textarea id="wAdviseSuggestedAction" class="auth-input-field" rows="2" placeholder="e.g. Sanction 14-day emergency leave immediately; assign sub-unit buddy for 1-to-1 personal care prior to travel..." required></textarea>
+        </div>
+
+        <!-- Form Field 4: Welfare Officer Confidential Notes & Justification -->
+        <div class="auth-input-group" style="margin-bottom: 1.2rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;"><i class="fas fa-comment-medical" style="color:#8b5cf6;"></i> Welfare Officer Clinical Assessment & Confidential Notes</label>
+          <textarea id="wAdviseNotes" class="auth-input-field" rows="3" placeholder="Explain the ground reality, family emergency status, sleep debt, or reasons behind this recommendation..." required></textarea>
+        </div>
+
+        <!-- Air-Gap Privacy Guarantee Notice -->
+        <div class="welfare-airgap-notice-box">
+          <i class="fas fa-user-secret" style="color:#0284c7; font-size:1.3rem; flex-shrink:0;"></i>
+          <div style="font-size:0.8rem; line-height:1.5; color:var(--text-main);">
+            <strong>Strict Confidentiality Guarantee:</strong> This advisory is delivered directly to the Commanding Officer's Operations Console. None of this advisory data, validation status, or rationale will pass to the personnel directly, preserving morale and eliminating operational stigma.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; margin-top: 1.25rem; justify-content: flex-end;">
+          <button type="button" class="btn-dismiss-stress-modal" onclick="rakshakApp.closeWelfareAdviseModal()">Cancel</button>
+          <button type="submit" class="btn-auth-submit" style="margin-top:0; width:auto; padding:0.75rem 1.6rem; background:linear-gradient(135deg, #0284c7, #2563eb);">
+            <i class="fas fa-paper-plane"></i> Dispatch Advisory to Commander
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Medical Officer Treatment Prescription & Welfare Report -->
+  <div id="medicalPrescribeModal" class="modal-overlay">
+    <div class="modal-content-box medical-modal-box" style="max-width: 680px;">
+      <button class="modal-close-btn" onclick="rakshakApp.closeMedicalPrescribeModal()">&times;</button>
+      
+      <div class="medical-modal-header">
+        <div class="medical-modal-icon-badge">
+          <i class="fas fa-prescription-bottle-alt"></i>
+        </div>
+        <div>
+          <h3 style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:0.2rem;">Prescribe Clinical Treatment & Sync with Welfare</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">Clinical Treatment Triage for <strong id="mModalPatientName">Havildar Rajesh Kumar</strong> (<span id="mModalPatientId">CRPF-94821</span>)</p>
+        </div>
+      </div>
+
+      <!-- Patient Vitals & Stress Strip -->
+      <div class="medical-modal-patient-summary">
+        <div class="mmodal-summary-item">
+          <span class="mmodal-label">Live Stress Score</span>
+          <span class="mmodal-value highlight" id="mModalStressPct">98% (Immediate)</span>
+        </div>
+        <div class="mmodal-summary-item">
+          <span class="mmodal-label">Recommended Care</span>
+          <span class="mmodal-value" id="mModalPriorityTier">Immediate Priority</span>
+        </div>
+        <div class="mmodal-summary-item">
+          <span class="mmodal-label">Current Status</span>
+          <span class="mmodal-value" id="mModalCurrentStatus" style="color:#f97316;">Undergoing Treatment</span>
+        </div>
+        <div class="mmodal-summary-item">
+          <span class="mmodal-label">Station / Post</span>
+          <span class="mmodal-value" id="mModalStation">Srinagar Base</span>
+        </div>
+      </div>
+
+      <form id="medicalPrescribeForm" onsubmit="rakshakApp.submitMedicalPrescription(event)">
+        <input type="hidden" id="mPrescribeSoldierId" value="" />
+
+        <!-- Form Field 1: Treatment Modality -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-stethoscope" style="color:#0ea5e9;"></i> Prescribed Clinical Treatment Modality
+          </label>
+          <select id="mPrescribeModality" class="auth-input-field" required>
+            <option value="1-on-1 Clinical Counseling (Trauma-Informed CBT)">1-on-1 Clinical Counseling (Trauma-Informed CBT & Crisis De-escalation)</option>
+            <option value="Clinical Therapy Sessions & Supervised Biofeedback">Clinical Therapy Sessions & Supervised Biofeedback Coaching</option>
+            <option value="Acute Clinical Decompression Therapy (In-Clinic 48h)">Acute Clinical Decompression Therapy (In-Clinic 48h Mandatory Rest)</option>
+            <option value="Sleep Cycle Restoration & Pharmacotherapy Regimen">Sleep Cycle Restoration & Pharmacotherapy Evaluation</option>
+            <option value="Group Peer-Support Therapy Circles">Group Peer-Support Counseling & Stress De-escalation Circles</option>
+            <option value="Rotational Rest & Tactical Mental Resilience Training">Rotational Rest & Tactical Mental Resilience Training</option>
+          </select>
+        </div>
+
+        <!-- Form Field 2: Treatment Status -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-check-circle" style="color:#10b981;"></i> Treatment Status to Report
+          </label>
+          <select id="mPrescribeStatus" class="auth-input-field" required>
+            <option value="Undergoing Treatment">Undergoing Treatment (Active clinical sessions scheduled)</option>
+            <option value="Treated">Treated (Patient stabilized & clinically cleared for duties)</option>
+          </select>
+        </div>
+
+        <!-- Form Field 3: Clinical Notes -->
+        <div class="auth-input-group" style="margin-bottom: 1.2rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-clipboard-prescription" style="color:#8b5cf6;"></i> Medical Officer Clinical Notes & Regimen
+          </label>
+          <textarea id="mPrescribeNotes" class="auth-input-field" rows="3" placeholder="Enter clinical assessment, session frequency (e.g. 2 sessions/week), medication, or duty relief recommendation..." required></textarea>
+        </div>
+
+        <!-- Welfare Sync Notice -->
+        <div class="medical-welfare-sync-notice">
+          <i class="fas fa-sync-alt" style="color:#0ea5e9; font-size:1.3rem; flex-shrink:0;"></i>
+          <div style="font-size:0.8rem; line-height:1.5; color:var(--text-main);">
+            <strong>Automated Welfare Synchronization:</strong> Upon submission, this clinical prescription and patient status will be immediately reported to the <strong>Unit Welfare Officer</strong> to schedule duty absence or advise the Commanding Officer.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; margin-top: 1.25rem; justify-content: flex-end;">
+          <button type="button" class="btn-dismiss-stress-modal" onclick="rakshakApp.closeMedicalPrescribeModal()">Cancel</button>
+          <button type="submit" class="btn-auth-submit" style="margin-top:0; width:auto; padding:0.75rem 1.6rem; background:linear-gradient(135deg, #0ea5e9, #0284c7);">
+            <i class="fas fa-paper-plane"></i> Confirm Prescription & Report to Welfare
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Welfare Officer Submit Treatment Application to Commander (Stress <= 75%) -->
+  <div id="welfareAbsenceModal" class="modal-overlay">
+    <div class="modal-content-box welfare-modal-box" style="max-width: 680px;">
+      <button class="modal-close-btn" onclick="rakshakApp.closeWelfareAbsenceModal()">&times;</button>
+      
+      <div class="welfare-modal-header">
+        <div id="wAbsenceIconBadge" class="welfare-modal-icon-badge" style="background:linear-gradient(135deg, #0284c7, #2563eb);">
+          <i class="fas fa-file-signature"></i>
+        </div>
+        <div>
+          <h3 id="wAbsenceModalTitle" style="font-size:1.25rem; font-weight:800; color:var(--text-main); margin-bottom:0.2rem;">📝 Submit Treatment Application to Commander (Stress &le; 75%)</h3>
+          <p id="wAbsenceModalSubtitle" style="font-size:0.85rem; color:var(--text-muted); margin:0;">Application sent to Commanding Officer for permission. Once approved, soldier is forwarded to Medical Officer for treatment.</p>
+        </div>
+      </div>
+
+      <!-- Personnel Info Banner -->
+      <div class="welfare-modal-soldier-summary">
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Personnel</span>
+          <span class="wmodal-value" id="wAbsenceSoldierName">Havildar Rajesh Kumar</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Live Stress</span>
+          <span class="wmodal-value highlight" id="wAbsenceStressPct" style="color:#0284c7;">68%</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Protocol Path</span>
+          <span class="wmodal-value" id="wAbsenceRuleText" style="color:#0284c7; font-weight:800;">Stress &le; 75% (Commander App)</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Next Step</span>
+          <span class="wmodal-value" style="color:#10b981;">CO Review &rarr; Forward to MO</span>
+        </div>
+      </div>
+
+      <form id="welfareAbsenceForm" onsubmit="rakshakApp.submitWelfareAbsenceReport(event)">
+        <input type="hidden" id="wAbsenceSoldierId" value="" />
+        <input type="hidden" id="wAbsenceMode" value="permission" />
+
+        <!-- Form Field 1: Proposed Treatment Modality for MO -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-hand-holding-medical" style="color:#0284c7;"></i> Proposed Clinical Treatment for Medical Officer (Upon Approval)
+          </label>
+          <select id="wAbsenceModalitySelect" class="auth-input-field" required>
+            <option value="1-on-1 Clinical Counseling & Stress Decompression" selected>1-on-1 Clinical Counseling &amp; Stress Decompression</option>
+            <option value="Therapy Sessions & Cognitive Relief">Therapy Sessions &amp; Cognitive Behavioral Relief</option>
+            <option value="Preventive Counseling & Routine Wellness Check">Preventive Counseling &amp; Routine Wellness Check</option>
+            <option value="Trauma-Informed Stress Relief & Sleep Decompression">Trauma-Informed Stress Relief &amp; Sleep Decompression</option>
+          </select>
+        </div>
+
+        <!-- Form Field 2: Absence Reason -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-hospital-user" style="color:#10b981;"></i> Purpose of Clinical Duty Relief
+          </label>
+          <input type="text" id="wAbsenceReason" class="auth-input-field" value="Base Hospital Clinical Counseling & Decompression Duty Relief" required />
+        </div>
+
+        <!-- Form Field 3: Absence Duration -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-clock" style="color:#f97316;"></i> Duty Absence Duration Requested
+          </label>
+          <select id="wAbsenceDays" class="auth-input-field" required>
+            <option value="3" selected>3 Days (Short decompression & counseling)</option>
+            <option value="5">5 Days (Standard therapeutic relief cycle)</option>
+            <option value="7">7 Days (Full clinical therapy & rest mandate)</option>
+            <option value="0">0 Days (In-Situ / On-Duty Clinical Counseling)</option>
+          </select>
+        </div>
+
+        <!-- Form Field 4: Justification Notes -->
+        <div class="auth-input-group" style="margin-bottom: 1.2rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-comment-alt" style="color:#8b5cf6;"></i> Welfare Officer Justification for Commanding Officer
+          </label>
+          <textarea id="wAbsenceNotes" class="auth-input-field" rows="2" placeholder="Explain rationale, sub-unit duty roster adjustments, and proposed clinical outcome..." required>Personnel exhibiting cumulative fatigue. Recommend commanding officer sanction for 1-1 counseling and therapeutic sessions at Base Hospital.</textarea>
+        </div>
+
+        <!-- Operational Rule Notice -->
+        <div id="wAbsenceDirectiveBox" class="welfare-airgap-notice-box" style="border-left: 4px solid #0284c7; background: rgba(2, 132, 199, 0.08);">
+          <i id="wAbsenceDirectiveIcon" class="fas fa-shield-alt" style="color:#0284c7; font-size:1.3rem; flex-shrink:0;"></i>
+          <div id="wAbsenceDirectiveText" style="font-size:0.8rem; line-height:1.5; color:var(--text-main);">
+            <strong>Protocol Directive (Stress &le; 75%):</strong> Commander approval is required before clinical scheduling. Once approved by the Commander, this personnel will automatically be placed in the <strong>Medical Officer's clinical queue</strong> with options to treat.
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; margin-top: 1.25rem; justify-content: flex-end;">
+          <button type="button" class="btn-dismiss-stress-modal" onclick="rakshakApp.closeWelfareAbsenceModal()">Cancel</button>
+          <button type="submit" id="wAbsenceSubmitBtn" class="btn-auth-submit" style="margin-top:0; width:auto; padding:0.75rem 1.6rem; background:linear-gradient(135deg, #0284c7, #2563eb);">
+            <i class="fas fa-paper-plane"></i> Send Application to Commander
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Welfare Officer Direct MO Referral (Stress > 75% - Bypasses Commander Pre-Approval) -->
+  <div id="welfareDirectReferralModal" class="modal-overlay">
+    <div class="modal-content-box welfare-modal-box emergency-box" style="max-width: 680px; border:2px solid #ef4444;">
+      <button class="modal-close-btn" onclick="rakshakApp.closeEmergencyMoReferralModal()">&times;</button>
+      
+      <div class="welfare-modal-header">
+        <div class="welfare-modal-icon-badge" style="background:linear-gradient(135deg, #ef4444, #b91c1c);">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div>
+          <h3 style="font-size:1.25rem; font-weight:800; color:#ef4444; margin-bottom:0.2rem;">⚡ Direct Treatment Referral to Medical Officer (Stress &gt; 75%)</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">Direct clinical request sent to Medical Officer based on severity (1-1 Counseling, Therapy) — Commander pre-approval bypassed.</p>
+        </div>
+      </div>
+
+      <div class="welfare-modal-soldier-summary" style="border-color:rgba(239, 68, 68, 0.4); background:rgba(239, 68, 68, 0.06);">
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Personnel</span>
+          <span class="wmodal-value" id="wDirectSoldierName">Havildar Rajesh Kumar</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Critical Stress</span>
+          <span class="wmodal-value highlight" id="wDirectStressPct" style="font-size:1.1rem; color:#ef4444;">88% (CRITICAL)</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Protocol Exemption</span>
+          <span class="wmodal-value" style="color:#ef4444; font-weight:800;">Stress &gt; 75% Direct MO</span>
+        </div>
+        <div class="wmodal-summary-item">
+          <span class="wmodal-label">Immediate Destination</span>
+          <span class="wmodal-value" style="color:#0ea5e9; font-weight:700;">Base Hospital MO Desk</span>
+        </div>
+      </div>
+
+      <form id="welfareDirectReferralForm" onsubmit="rakshakApp.submitEmergencyMoReferral(event)">
+        <input type="hidden" id="wDirectSoldierId" value="" />
+
+        <div style="background:rgba(239, 68, 68, 0.08); border:1px solid rgba(239, 68, 68, 0.3); border-radius:var(--radius-md); padding:0.9rem; margin-bottom:1.1rem;">
+          <h4 style="font-size:0.92rem; font-weight:800; color:#ef4444; margin-bottom:0.3rem;">
+            <i class="fas fa-bolt"></i> Severity Threshold Exceeded (Live Stress &gt; 75%)
+          </h4>
+          <p style="font-size:0.82rem; color:var(--text-main); margin:0; line-height:1.5;">
+            Under Armed Forces Rapid Triage Protocol, when a jawan's live stress exceeds <strong>75%</strong>, the Welfare Officer directly sends a treatment request to the Medical Officer based on severity (1-1 Counseling, Therapy) <strong>without waiting for prior Commander authorization</strong>.
+          </p>
+        </div>
+
+        <!-- Form Field 1: Treatment Modality Based on Severity -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-stethoscope" style="color:#ef4444;"></i> Severity-Based Treatment Requested for Medical Officer
+          </label>
+          <select id="wDirectModalitySelect" class="auth-input-field" required>
+            <option value="1-on-1 Clinical Counseling & Psychological First Aid" selected>1-on-1 Counseling &amp; Psychological First Aid (High Severity)</option>
+            <option value="Clinical Therapy Sessions & CBT">Clinical Therapy Sessions &amp; Cognitive Behavioral Therapy (Critical Severity)</option>
+            <option value="Intensive Clinical Decompression & Psychiatric Therapy">Intensive Decompression &amp; Psychiatric Therapy (Acute Severity)</option>
+            <option value="Trauma-Informed Crisis Intervention & Sleep Relief">Trauma-Informed Crisis Intervention &amp; Sleep Relief</option>
+          </select>
+        </div>
+
+        <!-- Form Field 2: Severity Classification -->
+        <div class="auth-input-group" style="margin-bottom: 1rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-thermometer-half" style="color:#f97316;"></i> Clinical Urgency &amp; Severity Level
+          </label>
+          <select id="wDirectSeveritySelect" class="auth-input-field" required>
+            <option value="Critical Severity (>75% Stress)" selected>Critical Severity (&gt;75% Stress) — Urgent Clinical Triage</option>
+            <option value="Severe Autonomic Strain">Severe Autonomic Strain &amp; Extreme Fatigue</option>
+            <option value="Acute Crisis Stabilization">Acute Crisis Stabilization Required</option>
+          </select>
+        </div>
+
+        <!-- Form Field 3: Clinical Notes -->
+        <div class="auth-input-group" style="margin-bottom: 1.2rem;">
+          <label style="font-weight:700; font-size:0.85rem; margin-bottom:0.4rem; display:block;">
+            <i class="fas fa-notes-medical" style="color:#ef4444;"></i> Welfare Officer Clinical Notes for Medical Officer
+          </label>
+          <textarea id="wDirectNotes" class="auth-input-field" rows="3" placeholder="Describe acute stress symptoms, sleep deficit, emotional distress, or treatment justification..." required>Severe autonomic overload and critical fatigue detected (>75% stress). Urgent direct clinical referral for 1-1 counseling and therapy sessions at Base Hospital.</textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; margin-top: 1.25rem; justify-content: flex-end;">
+          <button type="button" class="btn-dismiss-stress-modal" onclick="rakshakApp.closeEmergencyMoReferralModal()">Cancel</button>
+          <button type="submit" class="btn-auth-submit" style="margin-top:0; width:auto; padding:0.75rem 1.6rem; background:linear-gradient(135deg, #ef4444, #dc2626); box-shadow:0 4px 15px rgba(239, 68, 68, 0.4);">
+            <i class="fas fa-paper-plane"></i> Send Treatment Request to Medical Officer Now
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: DOWNLOAD & INSTALL RAKSHAK AI APP                       -->
+  <!-- ============================================================== -->
+  <div id="downloadModal" class="modal-overlay">
+    <div class="modal-card download-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-icon-badge download-icon-badge">
+            <i class="fas fa-download"></i>
+          </div>
+          <div>
+            <h3>Download Rakshak AI (रक्षक AI)</h3>
+            <p>Official Standalone Desktop Application & Non-Expiring Downloads</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="rakshakApp.closeDownloadModal()">&times;</button>
+      </div>
+
+      <div class="download-modal-body">
+        <div class="download-options-grid">
+
+          <!-- Option 1: Standalone Windows Desktop Edition -->
+          <div class="download-option-card highlighted">
+            <div class="option-badge">RECOMMENDED (PC & LAPTOP)</div>
+            <div class="option-header">
+              <div class="option-icon windows"><i class="fab fa-windows"></i></div>
+              <div>
+                <h4>Windows Desktop Edition</h4>
+                <span class="option-sub">Standalone Package (.ZIP / .EXE Launcher)</span>
+              </div>
+            </div>
+            <p class="option-desc">
+              Complete standalone application package with 1-click launcher (<code>Rakshak_AI.exe</code>), official desktop shortcut installer, and complete offline capability.
+            </p>
+            <ul class="option-perks">
+              <li><i class="fas fa-check-circle"></i> Native Desktop App Window (zero browser URL bar)</li>
+              <li><i class="fas fa-check-circle"></i> 1-Click Desktop Shortcut Installer with Crest Icon</li>
+              <li><i class="fas fa-check-circle"></i> Includes Pre-Trained Deep Learning Model & Offline Mode</li>
+            </ul>
+            <div class="download-actions-group">
+              <a href="/download/desktop-app" class="btn-download-primary" download="Rakshak-AI-Desktop-Setup.zip">
+                <i class="fas fa-file-zipper"></i> Download Desktop Setup (.ZIP)
+              </a>
+              <div class="download-mirror-row">
+                <a href="https://files.catbox.moe/hx51fg.zip" target="_blank" rel="noopener noreferrer" class="btn-download-mirror" title="Non-expiring permanent direct download">
+                  <i class="fas fa-cloud-arrow-down"></i> Permanent Direct Link
+                </a>
+                <a href="https://github.com/spal01-jpg/rakshak-ai/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer" class="btn-download-mirror" title="Non-expiring official GitHub download link">
+                  <i class="fab fa-github"></i> GitHub Source Archive
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option 2: Progressive Web App (PWA) -->
+          <div class="download-option-card">
+            <div class="option-badge pwa">1-CLICK BROWSER INSTALL</div>
+            <div class="option-header">
+              <div class="option-icon pwa"><i class="fas fa-mobile-screen-button"></i></div>
+              <div>
+                <h4>Install as App (PWA)</h4>
+                <span class="option-sub">Windows, Mac, Android, ChromeOS & iOS</span>
+              </div>
+            </div>
+            <p class="option-desc">
+              Installs Rakshak AI directly onto your device with an app icon on your Desktop, Start Menu, or Mobile Home Screen. Launches instantly without browser tabs.
+            </p>
+            <ul class="option-perks">
+              <li><i class="fas fa-check-circle"></i> Instant installation with zero downloads</li>
+              <li><i class="fas fa-check-circle"></i> Offline cached with Service Worker</li>
+              <li><i class="fas fa-check-circle"></i> Works on phone, tablet, and PC</li>
+            </ul>
+            <div class="download-actions-group">
+              <button type="button" id="btnTriggerPwaInstall" class="btn-download-primary pwa" onclick="rakshakApp.triggerPwaInstall()">
+                <i class="fas fa-plus-circle"></i> Install App On This Device
+              </button>
+            </div>
+          </div>
+
+          <!-- Option 3: Offline Standalone Single-File App -->
+          <div class="download-option-card">
+            <div class="option-badge offline">AIR-GAPPED FIELD EDITION</div>
+            <div class="option-header">
+              <div class="option-icon offline"><i class="fas fa-shield-halved"></i></div>
+              <div>
+                <h4>Standalone Offline HTML</h4>
+                <span class="option-sub">Air-Gapped Single File (Zero Dependencies)</span>
+              </div>
+            </div>
+            <p class="option-desc">
+              Double-click to run on any computer or secure air-gapped military terminal without Python, Node, or server setup. Includes all 28 personnel records and offline heuristic prediction.
+            </p>
+            <ul class="option-perks">
+              <li><i class="fas fa-check-circle"></i> Runs completely offline in any web browser</li>
+              <li><i class="fas fa-check-circle"></i> Embedded offline personnel database</li>
+              <li><i class="fas fa-check-circle"></i> No installations or admin permissions required</li>
+            </ul>
+            <div class="download-actions-group">
+              <a href="/Rakshak_Offline.html" class="btn-download-secondary" download="Rakshak_Offline.html">
+                <i class="fas fa-download"></i> Download Offline HTML
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Permanent Download Info Notice -->
+        <div class="download-permanent-info">
+          <i class="fas fa-infinity" style="color:#10b981; font-size:1.3rem;"></i>
+          <div>
+            <strong>Permanent, Non-Expiring Download:</strong>
+            <p style="margin:0.2rem 0 0 0; font-size:0.84rem; color:var(--text-muted);">
+              All download links provided above are permanent and will never expire. You can download the full standalone package or bookmark these links for permanent access anytime.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/chatbot.js"></script>
+  <script src="js/offline-adapter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
